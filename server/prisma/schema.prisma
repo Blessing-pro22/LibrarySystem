@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  LIBRARIAN
+  MEMBER
+}
+
+enum LoanStatus {
+  ACTIVE
+  RETURNED
+  OVERDUE
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      UserRole @default(MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  member    Member?
+  
+  @@index([email])
+}
+
+model Member {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  firstName   String
+  lastName    String
+  phone       String?
+  address     String?
+  city        String?
+  state       String?
+  zipCode     String?
+  country     String?  @default("USA")
+  joinedAt    DateTime @default(now())
+  isActive    Boolean  @default(true)
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  loans       Loan[]
+  
+  @@index([userId])
+  @@index([city])
+  @@index([state])
+}
+
+model Book {
+  id          String   @id @default(uuid())
+  isbn        String   @unique
+  title       String
+  author      String
+  publisher   String?
+  publishedYear Int?
+  category    String?
+  description String?
+  totalCopies Int     @default(0)
+  availableCopies Int @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  copies      Copy[]
+  
+  @@index([isbn])
+  @@index([title])
+  @@index([author])
+}
+
+model Copy {
+  id          String   @id @default(uuid())
+  bookId      String
+  barcode     String   @unique
+  status      String   @default("AVAILABLE") // AVAILABLE, BORROWED, DAMAGED, LOST
+  acquiredAt  DateTime @default(now())
+  
+  book        Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  loans       Loan[]
+  
+  @@index([bookId])
+  @@index([barcode])
+}
+
+model Loan {
+  id          String     @id @default(uuid())
+  memberId    String
+  copyId      String
+  loanDate    DateTime   @default(now())
+  dueDate     DateTime
+  returnDate  DateTime?
+  status      LoanStatus @default(ACTIVE)
+  notes       String?
+  
+  member      Member     @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  copy        Copy       @relation(fields: [copyId], references: [id], onDelete: Cascade)
+  
+  @@index([memberId])
+  @@index([copyId])
+  @@index([status])
+  @@index([dueDate])
+}
