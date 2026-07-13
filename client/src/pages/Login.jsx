@@ -58,6 +58,7 @@ const Login = () => {
               <Input
                 id="email"
                 type="email"
+                className="input-modern" /* Applied layout visibility fix here */
                 placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -69,6 +70,7 @@ const Login = () => {
               <Input
                 id="password"
                 type="password"
+                className="input-modern" /* Applied layout visibility fix here */
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
