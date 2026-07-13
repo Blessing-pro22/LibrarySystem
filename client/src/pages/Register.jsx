@@ -73,6 +73,7 @@ const Register = () => {
                 <Input
                   id="firstName"
                   name="firstName"
+                  className="input-modern"
                   value={formData.firstName}
                   onChange={handleChange}
                   required
@@ -83,6 +84,7 @@ const Register = () => {
                 <Input
                   id="lastName"
                   name="lastName"
+                  className="input-modern"
                   value={formData.lastName}
                   onChange={handleChange}
                   required
@@ -95,6 +97,7 @@ const Register = () => {
                 id="email"
                 name="email"
                 type="email"
+                className="input-modern"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -106,6 +109,7 @@ const Register = () => {
                 id="password"
                 name="password"
                 type="password"
+                className="input-modern"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -117,6 +121,7 @@ const Register = () => {
               <Input
                 id="phone"
                 name="phone"
+                className="input-modern"
                 value={formData.phone}
                 onChange={handleChange}
               />
@@ -126,6 +131,7 @@ const Register = () => {
               <Input
                 id="address"
                 name="address"
+                className="input-modern"
                 value={formData.address}
                 onChange={handleChange}
               />
@@ -136,6 +142,7 @@ const Register = () => {
                 <Input
                   id="city"
                   name="city"
+                  className="input-modern"
                   value={formData.city}
                   onChange={handleChange}
                 />
@@ -145,6 +152,7 @@ const Register = () => {
                 <Input
                   id="state"
                   name="state"
+                  className="input-modern"
                   value={formData.state}
                   onChange={handleChange}
                 />
@@ -156,6 +164,7 @@ const Register = () => {
                 <Input
                   id="zipCode"
                   name="zipCode"
+                  className="input-modern"
                   value={formData.zipCode}
                   onChange={handleChange}
                 />
@@ -165,6 +174,7 @@ const Register = () => {
                 <Input
                   id="country"
                   name="country"
+                  className="input-modern"
                   value={formData.country}
                   onChange={handleChange}
                 />
