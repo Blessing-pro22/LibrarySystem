@@ -113,7 +113,7 @@ const Register = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-gray-700 dark:text-gray-300 font-medium">Phone (optional)</Label>
+              <Label htmlFor="phone" className="text-gray-700 dark:text-gray-300 font-medium">Phone (Required)</Label>
               <Input
                 id="phone"
                 name="phone"
@@ -122,7 +122,7 @@ const Register = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="address" className="text-gray-700 dark:text-gray-300 font-medium">Address (optional)</Label>
+              <Label htmlFor="address" className="text-gray-700 dark:text-gray-300 font-medium">Address (Required)</Label>
               <Input
                 id="address"
                 name="address"
@@ -132,7 +132,7 @@ const Register = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="city" className="text-gray-700 dark:text-gray-300 font-medium">City (optional)</Label>
+                <Label htmlFor="city" className="text-gray-700 dark:text-gray-300 font-medium">City (Required)</Label>
                 <Input
                   id="city"
                   name="city"
@@ -141,7 +141,7 @@ const Register = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="state" className="text-gray-700 dark:text-gray-300 font-medium">State (optional)</Label>
+                <Label htmlFor="state" className="text-gray-700 dark:text-gray-300 font-medium">State (Required)</Label>
                 <Input
                   id="state"
                   name="state"
@@ -161,7 +161,7 @@ const Register = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="country" className="text-gray-700 dark:text-gray-300 font-medium">Country (optional)</Label>
+                <Label htmlFor="country" className="text-gray-700 dark:text-gray-300 font-medium">Country (Required)</Label>
                 <Input
                   id="country"
                   name="country"
