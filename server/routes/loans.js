@@ -77,7 +77,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// Checkout book (Librarian only)
+// Checkout book (Librarian only, but members can borrow for themselves)
 router.post('/', [
   body('memberId').notEmpty(),
   body('copyId').notEmpty(),
@@ -90,6 +90,14 @@ router.post('/', [
     }
 
     const { memberId, copyId, dueDate, notes } = req.body;
+
+    // Members can only borrow for themselves
+    if (req.user.role === 'MEMBER') {
+      const member = await prisma.member.findUnique({ where: { userId: req.user.id } });
+      if (!member || member.id !== memberId) {
+        return res.status(403).json({ error: { message: 'Members can only borrow books for themselves' } });
+      }
+    }
 
     // Verify member exists and is active
     const member = await prisma.member.findUnique({ where: { id: memberId } });

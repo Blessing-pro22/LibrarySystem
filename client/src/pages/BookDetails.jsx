@@ -78,36 +78,38 @@ const BookDetails = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 max-w-6xl mx-auto">
       <Button variant="ghost" onClick={() => navigate('/books')}>
         <ArrowLeft className="h-4 w-4 mr-2" />
         Back to Books
       </Button>
 
       {/* Book Details */}
-      <Card>
-        <CardHeader>
+      <Card className="shadow-lg">
+        <CardHeader className="pb-8">
           <div className="flex justify-between items-start">
-            <div className="flex items-start space-x-4">
-              <BookOpen className="h-12 w-12 text-primary mt-1" />
-              <div>
+            <div className="flex items-start space-x-6">
+              <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-4 rounded-2xl shadow-lg">
+                <BookOpen className="h-16 w-16 text-white" />
+              </div>
+              <div className="flex-1">
                 {editing ? (
                   <Input
                     value={editForm.title}
                     onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                    className="text-2xl font-bold mb-2"
+                    className="text-3xl font-bold mb-3 text-gray-900 dark:text-gray-100"
                   />
                 ) : (
-                  <CardTitle className="text-2xl">{book.title}</CardTitle>
+                  <CardTitle className="text-3xl text-gray-900 dark:text-gray-100">{book.title}</CardTitle>
                 )}
                 {editing ? (
                   <Input
                     value={editForm.author}
                     onChange={(e) => setEditForm({ ...editForm, author: e.target.value })}
-                    className="text-muted-foreground"
+                    className="text-gray-600 dark:text-gray-400 text-lg"
                   />
                 ) : (
-                  <CardDescription>by {book.author}</CardDescription>
+                  <CardDescription className="text-lg text-gray-600 dark:text-gray-400">by {book.author}</CardDescription>
                 )}
               </div>
             </div>
@@ -129,26 +131,26 @@ const BookDetails = () => {
             )}
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-8">
           {editing ? (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <Label>ISBN</Label>
+                  <Label className="text-gray-700 dark:text-gray-300">ISBN</Label>
                   <Input
                     value={editForm.isbn}
                     onChange={(e) => setEditForm({ ...editForm, isbn: e.target.value })}
                   />
                 </div>
                 <div>
-                  <Label>Publisher</Label>
+                  <Label className="text-gray-700 dark:text-gray-300">Publisher</Label>
                   <Input
                     value={editForm.publisher || ''}
                     onChange={(e) => setEditForm({ ...editForm, publisher: e.target.value })}
                   />
                 </div>
                 <div>
-                  <Label>Published Year</Label>
+                  <Label className="text-gray-700 dark:text-gray-300">Published Year</Label>
                   <Input
                     type="number"
                     value={editForm.publishedYear || ''}
@@ -156,7 +158,7 @@ const BookDetails = () => {
                   />
                 </div>
                 <div>
-                  <Label>Category</Label>
+                  <Label className="text-gray-700 dark:text-gray-300">Category</Label>
                   <Input
                     value={editForm.category || ''}
                     onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
@@ -164,48 +166,52 @@ const BookDetails = () => {
                 </div>
               </div>
               <div>
-                <Label>Description</Label>
+                <Label className="text-gray-700 dark:text-gray-300">Description</Label>
                 <textarea
                   value={editForm.description || ''}
                   onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                  className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                  className="flex min-h-[120px] w-full rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-sm ring-offset-background focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
             </div>
           ) : (
-            <div className="space-y-2">
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="font-medium">ISBN:</span> {book.isbn}
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-6 text-base">
+                <div className="flex flex-col space-y-1">
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">ISBN:</span>
+                  <span className="text-gray-900 dark:text-gray-100">{book.isbn}</span>
                 </div>
-                <div>
-                  <span className="font-medium">Publisher:</span> {book.publisher || '-'}
+                <div className="flex flex-col space-y-1">
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Publisher:</span>
+                  <span className="text-gray-900 dark:text-gray-100">{book.publisher || '-'}</span>
                 </div>
-                <div>
-                  <span className="font-medium">Published Year:</span> {book.publishedYear || '-'}
+                <div className="flex flex-col space-y-1">
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Published Year:</span>
+                  <span className="text-gray-900 dark:text-gray-100">{book.publishedYear || '-'}</span>
                 </div>
-                <div>
-                  <span className="font-medium">Category:</span> {book.category || '-'}
+                <div className="flex flex-col space-y-1">
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Category:</span>
+                  <span className="text-gray-900 dark:text-gray-100">{book.category || '-'}</span>
                 </div>
               </div>
               {book.description && (
-                <div className="mt-4">
-                  <span className="font-medium">Description:</span>
-                  <p className="text-muted-foreground mt-1">{book.description}</p>
+                <div className="mt-6 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <span className="font-semibold text-gray-700 dark:text-gray-300 block mb-2">Description:</span>
+                  <p className="text-gray-900 dark:text-gray-100 leading-relaxed">{book.description}</p>
                 </div>
               )}
-              <div className="flex space-x-4 mt-4 pt-4 border-t">
+              <div className="flex space-x-8 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div>
-                  <span className="text-2xl font-bold">{book.totalCopies}</span>
-                  <p className="text-sm text-muted-foreground">Total Copies</p>
+                  <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">{book.totalCopies}</span>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Copies</p>
                 </div>
                 <div>
-                  <span className="text-2xl font-bold text-green-600">{book.availableCopies}</span>
-                  <p className="text-sm text-muted-foreground">Available</p>
+                  <span className="text-3xl font-bold text-green-600 dark:text-green-400">{book.availableCopies}</span>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Available</p>
                 </div>
                 <div>
-                  <span className="text-2xl font-bold text-blue-600">{book.totalCopies - book.availableCopies}</span>
-                  <p className="text-sm text-muted-foreground">Borrowed</p>
+                  <span className="text-3xl font-bold text-blue-600 dark:text-blue-400">{book.totalCopies - book.availableCopies}</span>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Borrowed</p>
                 </div>
               </div>
             </div>

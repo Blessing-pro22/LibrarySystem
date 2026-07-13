@@ -101,6 +101,96 @@ const books = [
     category: 'Historical Fiction',
     description: 'A novel set during World War II in Germany, narrated by Death, about a young girl who steals books.',
     totalCopies: 4
+  },
+  {
+    isbn: '978-0-14-027736-8',
+    title: 'Pride and Prejudice',
+    author: 'Jane Austen',
+    publisher: 'T. Egerton',
+    publishedYear: 1813,
+    category: 'Romance',
+    description: 'A romantic novel that follows the emotional development of Elizabeth Bennet.',
+    totalCopies: 3
+  },
+  {
+    isbn: '978-0-451-52493-6',
+    title: 'Brave New World',
+    author: 'Aldous Huxley',
+    publisher: 'Chatto & Windus',
+    publishedYear: 1932,
+    category: 'Dystopian Fiction',
+    description: 'A dystopian novel that explores a futuristic society where citizens are genetically engineered.',
+    totalCopies: 3
+  },
+  {
+    isbn: '978-0-312-19554-5',
+    title: 'The Kite Runner',
+    author: 'Khaled Hosseini',
+    publisher: 'Riverhead Books',
+    publishedYear: 2003,
+    category: 'Historical Fiction',
+    description: 'A story about friendship, betrayal, and redemption set in Afghanistan.',
+    totalCopies: 4
+  },
+  {
+    isbn: '978-0-316-01692-0',
+    title: 'Life of Pi',
+    author: 'Yann Martel',
+    publisher: 'Knopf Canada',
+    publishedYear: 2001,
+    category: 'Adventure',
+    description: 'A philosophical novel about a young man who survives a shipwreck and shares a lifeboat with a Bengal tiger.',
+    totalCopies: 3
+  },
+  {
+    isbn: '978-0-679-41003-6',
+    title: 'The Road',
+    author: 'Cormac McCarthy',
+    publisher: 'Alfred A. Knopf',
+    publishedYear: 2006,
+    category: 'Post-Apocalyptic',
+    description: 'A novel about a father and son journeying through a post-apocalyptic landscape.',
+    totalCopies: 3
+  },
+  {
+    isbn: '978-0-307-27777-3',
+    title: 'The Girl with the Dragon Tattoo',
+    author: 'Stieg Larsson',
+    publisher: 'Norstedts Förlag',
+    publishedYear: 2005,
+    category: 'Mystery Thriller',
+    description: 'A crime novel about a journalist and a hacker investigating a disappearance.',
+    totalCopies: 4
+  },
+  {
+    isbn: '978-0-345-39180-3',
+    title: 'The Hobbit',
+    author: 'J.R.R. Tolkien',
+    publisher: 'George Allen & Unwin',
+    publishedYear: 1937,
+    category: 'Fantasy',
+    description: 'A fantasy novel about a hobbit who embarks on an unexpected journey.',
+    totalCopies: 5
+  },
+  {
+    isbn: '978-0-553-38011-7',
+    title: 'The Shining',
+    author: 'Stephen King',
+    publisher: 'Doubleday',
+    publishedYear: 1977,
+    category: 'Horror',
+    description: 'A horror novel about a family caretaking an isolated hotel during winter.',
+    totalCopies: 3
+  },
+  {
+    isbn: '978-0-670-81302-4',
+    title: 'The Name of the Wind',
+    author: 'Patrick Rothfuss',
+    publisher: 'DAW Books',
+    publishedYear: 2007,
+    category: 'Fantasy',
+    description: 'The first book in the Kingkiller Chronicle, telling the story of a legendary figure.',
+    totalCopies: 3
   }
 ];
 

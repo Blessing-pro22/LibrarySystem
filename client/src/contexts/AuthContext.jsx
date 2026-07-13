@@ -20,7 +20,19 @@ export const AuthProvider = ({ children }) => {
   const fetchUser = async () => {
     try {
       const response = await axios.get('/api/auth/me')
-      setUser(response.data.user)
+      const userData = response.data.user
+      
+      // Fetch member data if user is a member
+      if (userData.role === 'MEMBER') {
+        try {
+          const memberResponse = await axios.get('/api/members/profile/me')
+          userData.member = memberResponse.data
+        } catch (memberError) {
+          console.error('Failed to fetch member data:', memberError)
+        }
+      }
+      
+      setUser(userData)
     } catch (error) {
       localStorage.removeItem('token')
       delete axios.defaults.headers.common['Authorization']
@@ -34,6 +46,17 @@ export const AuthProvider = ({ children }) => {
     const { token, user } = response.data
     localStorage.setItem('token', token)
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    
+    // Fetch member data if user is a member
+    if (user.role === 'MEMBER') {
+      try {
+        const memberResponse = await axios.get('/api/members/profile/me')
+        user.member = memberResponse.data
+      } catch (memberError) {
+        console.error('Failed to fetch member data:', memberError)
+      }
+    }
+    
     setUser(user)
     return user
   }
@@ -43,6 +66,17 @@ export const AuthProvider = ({ children }) => {
     const { token, user } = response.data
     localStorage.setItem('token', token)
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    
+    // Fetch member data if user is a member
+    if (user.role === 'MEMBER') {
+      try {
+        const memberResponse = await axios.get('/api/members/profile/me')
+        user.member = memberResponse.data
+      } catch (memberError) {
+        console.error('Failed to fetch member data:', memberError)
+      }
+    }
+    
     setUser(user)
     return user
   }

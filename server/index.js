@@ -35,7 +35,7 @@ app.use('/api/auth', authRoutes);
 
 // Protected routes
 app.use('/api/books', authenticateToken, bookRoutes);
-app.use('/api/copies', authenticateToken, authorizeRoles('LIBRARIAN'), copyRoutes);
+app.use('/api/copies', authenticateToken, copyRoutes);
 app.use('/api/members', authenticateToken, memberRoutes);
 app.use('/api/loans', authenticateToken, loanRoutes);
 app.use('/api/dashboard', authenticateToken, dashboardRoutes);
