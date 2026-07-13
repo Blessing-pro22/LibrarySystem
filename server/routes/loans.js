@@ -132,11 +132,6 @@ router.post('/', [
         data: { status: 'BORROWED' }
       });
 
-      await tx.book.update({
-        where: { id: copy.bookId },
-        data: { availableCopies: { decrement: 1 } }
-      });
-
       return newLoan;
     });
 
@@ -179,11 +174,6 @@ router.patch('/:id/return', async (req, res, next) => {
       await tx.copy.update({
         where: { id: loan.copyId },
         data: { status: 'AVAILABLE' }
-      });
-
-      await tx.book.update({
-        where: { id: loan.copy.bookId },
-        data: { availableCopies: { increment: 1 } }
       });
 
       return returnedLoan;

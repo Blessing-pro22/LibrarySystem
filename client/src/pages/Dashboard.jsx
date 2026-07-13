@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../api/axios'
 import { useAuth } from '../contexts/AuthContext'
 import { BookOpen, Users, Clock, AlertCircle, MapPin, TrendingUp, Book, BookMarked, Bell, X } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card'

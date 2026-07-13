@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../api/axios'
 import { useAuth } from '../contexts/AuthContext'
 import { Search, Plus, Edit, Trash2, BookOpen, Calendar, Clock, MapPin } from 'lucide-react'
 import Button from '../components/ui/button'

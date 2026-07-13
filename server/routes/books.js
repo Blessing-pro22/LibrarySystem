@@ -32,8 +32,14 @@ router.get('/', async (req, res, next) => {
       prisma.book.count({ where })
     ]);
 
+    // Calculate available copies dynamically based on copy status
+    const booksWithAvailableCount = books.map(book => ({
+      ...book,
+      availableCopies: book.copies.filter(copy => copy.status === 'AVAILABLE').length
+    }));
+
     res.json({
-      books,
+      books: booksWithAvailableCount,
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
@@ -58,7 +64,13 @@ router.get('/:id', async (req, res, next) => {
       return res.status(404).json({ error: { message: 'Book not found' } });
     }
 
-    res.json(book);
+    // Calculate available copies dynamically based on copy status
+    const bookWithAvailableCount = {
+      ...book,
+      availableCopies: book.copies.filter(copy => copy.status === 'AVAILABLE').length
+    };
+
+    res.json(bookWithAvailableCount);
   } catch (error) {
     next(error);
   }
