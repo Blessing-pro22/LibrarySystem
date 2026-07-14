@@ -10,6 +10,7 @@ import Loans from './pages/Loans'
 import Members from './pages/Members'
 import MemberDetails from './pages/MemberDetails'
 import Profile from './pages/Profile'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="members" element={<Members />} />
             <Route path="members/:id" element={<MemberDetails />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </AuthProvider>
