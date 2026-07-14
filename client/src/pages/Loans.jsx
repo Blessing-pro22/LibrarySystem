@@ -59,19 +59,25 @@ const Loans = () => {
     }
   }
 
+  const statusBadgeClass = (status) => {
+    if (status === 'ACTIVE') return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
+    if (status === 'OVERDUE') return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+    return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+  }
+
   if (loading) {
     return <div className="text-center py-8">Loading loans...</div>
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div>
-          <h1 className="text-3xl font-bold">Loans</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Loans</h1>
           <p className="text-muted-foreground">Manage book circulation</p>
         </div>
         {isLibrarian && (
-          <Button onClick={() => setShowCheckoutModal(true)}>
+          <Button onClick={() => setShowCheckoutModal(true)} className="self-start sm:self-auto">
             <Plus className="h-4 w-4 mr-2" />
             Checkout Book
           </Button>
@@ -79,11 +85,11 @@ const Loans = () => {
       </div>
 
       {/* Filter */}
-      <div className="flex space-x-4">
+      <div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="flex h-10 w-[200px] rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="flex h-11 w-full sm:w-48 rounded-md border border-input bg-background px-3 py-2 text-sm"
         >
           <option value="">All Status</option>
           <option value="ACTIVE">Active</option>
@@ -92,8 +98,85 @@ const Loans = () => {
         </select>
       </div>
 
-      {/* Loans Table */}
-      <Card>
+      {/* Mobile cards (below md) */}
+      <div className="md:hidden space-y-3">
+        {loans.length === 0 ? (
+          <div className="text-center py-10 text-muted-foreground">No loans found</div>
+        ) : (
+          loans.map((loan) => (
+            <div
+              key={loan.id}
+              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3"
+            >
+              {/* Title + Status */}
+              <div className="flex items-start justify-between gap-2">
+                <p className="font-semibold text-gray-900 dark:text-gray-100 flex-1 leading-tight">
+                  {loan.copy.book.title}
+                </p>
+                <span className={`shrink-0 px-2 py-1 rounded-full text-xs font-semibold ${statusBadgeClass(loan.status)}`}>
+                  {loan.status}
+                </span>
+              </div>
+
+              {/* Member */}
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {loan.member.firstName} {loan.member.lastName}
+              </p>
+
+              {/* Dates */}
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <span className="text-gray-500 dark:text-gray-400 block text-xs uppercase tracking-wide">Due</span>
+                  <span className={`font-medium ${loan.status === 'OVERDUE' ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100'}`}>
+                    {format(new Date(loan.dueDate), 'MMM dd, yyyy')}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-gray-500 dark:text-gray-400 block text-xs uppercase tracking-wide">Borrowed</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">
+                    {format(new Date(loan.loanDate), 'MMM dd, yyyy')}
+                  </span>
+                </div>
+                {loan.returnDate && (
+                  <div className="col-span-2">
+                    <span className="text-gray-500 dark:text-gray-400 block text-xs uppercase tracking-wide">Returned</span>
+                    <span className="font-medium text-gray-900 dark:text-gray-100">
+                      {format(new Date(loan.returnDate), 'MMM dd, yyyy')}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Actions */}
+              {isLibrarian && loan.status === 'ACTIVE' && (
+                <div className="flex gap-2 pt-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleReturn(loan.id)}
+                    className="flex-1"
+                  >
+                    <RotateCcw className="h-4 w-4 mr-1" />
+                    Return
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRenew(loan.id)}
+                    className="flex-1"
+                  >
+                    <Calendar className="h-4 w-4 mr-1" />
+                    Renew
+                  </Button>
+                </div>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop table (md and up) */}
+      <Card className="hidden md:block">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
@@ -127,15 +210,7 @@ const Loans = () => {
                       {loan.returnDate ? format(new Date(loan.returnDate), 'MMM dd, yyyy') : '-'}
                     </TableCell>
                     <TableCell>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          loan.status === 'ACTIVE'
-                            ? 'bg-blue-100 text-blue-800'
-                            : loan.status === 'OVERDUE'
-                            ? 'bg-red-100 text-red-800'
-                            : 'bg-green-100 text-green-800'
-                        }`}
-                      >
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusBadgeClass(loan.status)}`}>
                         {loan.status}
                       </span>
                     </TableCell>
@@ -173,7 +248,7 @@ const Loans = () => {
 
       {/* Checkout Modal */}
       {showCheckoutModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle>Checkout Book</CardTitle>
@@ -204,7 +279,6 @@ const CheckoutForm = ({ onSuccess, onCancel }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  // Set default due date to 14 days from now
   useEffect(() => {
     const defaultDueDate = new Date()
     defaultDueDate.setDate(defaultDueDate.getDate() + 14)

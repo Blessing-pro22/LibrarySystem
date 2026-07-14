@@ -126,9 +126,9 @@ const Dashboard = () => {
   if (!isLibrarian) {
     return (
       <div className="space-y-8">
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+        <div className="flex justify-between items-start gap-3">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
               Welcome, {user?.member?.firstName}!
             </h1>
             <p className="text-gray-600 dark:text-gray-400 mt-2">Your library portal</p>
@@ -150,7 +150,7 @@ const Dashboard = () => {
             
             {/* Notification Dropdown */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50">
+              <div className="absolute right-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50">
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700">
                   <h3 className="font-semibold text-gray-900 dark:text-gray-100">Notifications</h3>
                 </div>
@@ -184,24 +184,24 @@ const Dashboard = () => {
         </div>
 
         {/* Client Stats */}
-        <div className="grid gap-6 md:grid-cols-3">
-          <StatCard 
-            title="Books Borrowed" 
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <StatCard
+            title="Books Borrowed"
             value={myLoans.length} 
             subtitle="Currently in your possession"
             icon={<Book className="h-5 w-5" />}
             gradient="from-purple-500 to-purple-600"
           />
-          <StatCard 
-            title="Available Books" 
-            value={stats?.books?.available || 0} 
+          <StatCard
+            title="Available Books"
+            value={stats?.books?.available || 0}
             subtitle="Ready to borrow"
             icon={<BookOpen className="h-5 w-5" />}
             gradient="from-blue-500 to-blue-600"
           />
-          <StatCard 
-            title="Your Location" 
-            value={user?.member?.city || 'Not set'} 
+          <StatCard
+            title="Your Location"
+            value={user?.member?.city || 'Not set'}
             subtitle={user?.member?.state || ''}
             icon={<MapPin className="h-5 w-5" />}
             gradient="from-green-500 to-green-600"
@@ -252,7 +252,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-sm">
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4 text-sm">
                         <div className="flex flex-col">
                           <span className="text-gray-500 dark:text-gray-400">Borrowed Date:</span>
                           <span className="font-medium text-gray-900 dark:text-gray-100">{format(new Date(loan.loanDate), 'MMM dd, yyyy')}</span>
@@ -277,12 +277,12 @@ const Dashboard = () => {
                       
                       {/* Countdown Timer */}
                       <div className="mt-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
                           <div className="flex items-center space-x-2">
-                            <Clock className="h-4 w-4 text-gray-400" />
+                            <Clock className="h-4 w-4 text-gray-400 shrink-0" />
                             <span className="text-sm text-gray-600 dark:text-gray-400">Time until due:</span>
                           </div>
-                          <span className={`font-mono font-bold ${isOverdue ? 'text-red-600 dark:text-red-400' : isDueSoon ? 'text-yellow-600 dark:text-yellow-400' : 'text-green-600 dark:text-green-400'}`}>
+                          <span className={`font-mono font-bold text-sm ${isOverdue ? 'text-red-600 dark:text-red-400' : isDueSoon ? 'text-yellow-600 dark:text-yellow-400' : 'text-green-600 dark:text-green-400'}`}>
                             {getTimeRemaining(loan.dueDate)}
                           </span>
                         </div>
@@ -313,7 +313,7 @@ const Dashboard = () => {
 
         {/* Reading Modal */}
         {readingBook && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
               <CardHeader>
                 <div className="flex justify-between items-start">
@@ -384,12 +384,12 @@ const Dashboard = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">Admin Dashboard</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">Admin Dashboard</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">Library management and analytics</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard 
           title="Total Books" 
           value={stats?.books?.total || 0} 

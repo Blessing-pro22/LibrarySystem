@@ -87,34 +87,34 @@ const BookDetails = () => {
       {/* Book Details */}
       <Card className="shadow-lg">
         <CardHeader className="pb-8">
-          <div className="flex justify-between items-start">
-            <div className="flex items-start space-x-6">
-              <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-4 rounded-2xl shadow-lg">
-                <BookOpen className="h-16 w-16 text-white" />
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+            <div className="flex items-start gap-4 sm:gap-6 flex-1 min-w-0">
+              <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-3 sm:p-4 rounded-2xl shadow-lg shrink-0">
+                <BookOpen className="h-10 w-10 sm:h-16 sm:w-16 text-white" />
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 {editing ? (
                   <Input
                     value={editForm.title}
                     onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                    className="text-3xl font-bold mb-3 text-gray-900 dark:text-gray-100"
+                    className="font-bold mb-3 text-gray-900 dark:text-gray-100"
                   />
                 ) : (
-                  <CardTitle className="text-3xl text-gray-900 dark:text-gray-100">{book.title}</CardTitle>
+                  <CardTitle className="text-xl sm:text-2xl md:text-3xl text-gray-900 dark:text-gray-100 leading-tight">{book.title}</CardTitle>
                 )}
                 {editing ? (
                   <Input
                     value={editForm.author}
                     onChange={(e) => setEditForm({ ...editForm, author: e.target.value })}
-                    className="text-gray-600 dark:text-gray-400 text-lg"
+                    className="text-gray-600 dark:text-gray-400 mt-2"
                   />
                 ) : (
-                  <CardDescription className="text-lg text-gray-600 dark:text-gray-400">by {book.author}</CardDescription>
+                  <CardDescription className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mt-1">by {book.author}</CardDescription>
                 )}
               </div>
             </div>
             {isLibrarian && (
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 shrink-0">
                 {editing ? (
                   <>
                     <Button onClick={handleUpdate}>Save</Button>
@@ -134,7 +134,7 @@ const BookDetails = () => {
         <CardContent className="space-y-8">
           {editing ? (
             <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <Label className="text-gray-700 dark:text-gray-300">ISBN</Label>
                   <Input
@@ -176,7 +176,7 @@ const BookDetails = () => {
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6 text-base">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 text-base">
                 <div className="flex flex-col space-y-1">
                   <span className="font-semibold text-gray-700 dark:text-gray-300">ISBN:</span>
                   <span className="text-gray-900 dark:text-gray-100">{book.isbn}</span>
@@ -200,7 +200,7 @@ const BookDetails = () => {
                   <p className="text-gray-900 dark:text-gray-100 leading-relaxed">{book.description}</p>
                 </div>
               )}
-              <div className="flex space-x-8 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex flex-wrap gap-6 sm:gap-8 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div>
                   <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">{book.totalCopies}</span>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Copies</p>
@@ -223,12 +223,12 @@ const BookDetails = () => {
       {isLibrarian && (
         <Card>
           <CardHeader>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
               <div>
                 <CardTitle>Book Copies</CardTitle>
                 <CardDescription>Manage physical copies</CardDescription>
               </div>
-              <Button onClick={() => setShowAddCopyModal(true)}>
+              <Button onClick={() => setShowAddCopyModal(true)} className="self-start sm:self-auto">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Copy
               </Button>
@@ -289,7 +289,7 @@ const BookDetails = () => {
 
       {/* Add Copy Modal */}
       {showAddCopyModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-md">
             <CardHeader>
               <CardTitle>Add New Copy</CardTitle>

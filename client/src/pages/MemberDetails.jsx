@@ -66,15 +66,15 @@ const MemberDetails = () => {
       {/* Member Details */}
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
             <div>
-              <CardTitle className="text-2xl">
+              <CardTitle className="text-xl sm:text-2xl">
                 {member.firstName} {member.lastName}
               </CardTitle>
               <CardDescription>{member.user.email}</CardDescription>
             </div>
             {canEdit && (
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 shrink-0">
                 {editing ? (
                   <>
                     <Button onClick={handleUpdate}>Save</Button>
@@ -94,7 +94,7 @@ const MemberDetails = () => {
         <CardContent>
           {editing ? (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label>First Name</Label>
                   <Input
@@ -127,9 +127,9 @@ const MemberDetails = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center space-x-2">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <Mail className="h-4 w-4 text-muted-foreground shrink-0" />
                   <span className="text-sm">{member.user.email}</span>
                 </div>
                 {member.phone && (

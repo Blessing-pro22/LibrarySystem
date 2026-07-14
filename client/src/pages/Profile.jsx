@@ -78,19 +78,19 @@ const Profile = () => {
       {/* Profile Card */}
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-start">
-            <div className="flex items-center space-x-4">
-              <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center">
-                <User className="h-8 w-8 text-primary-foreground" />
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+            <div className="flex items-center space-x-4 min-w-0">
+              <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-primary flex items-center justify-center shrink-0">
+                <User className="h-7 w-7 sm:h-8 sm:w-8 text-primary-foreground" />
               </div>
-              <div>
-                <CardTitle className="text-2xl">
+              <div className="min-w-0">
+                <CardTitle className="text-xl sm:text-2xl truncate">
                   {member.firstName} {member.lastName}
                 </CardTitle>
-                <CardDescription>{member.user.email}</CardDescription>
+                <CardDescription className="truncate">{member.user.email}</CardDescription>
               </div>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 shrink-0">
               {editing ? (
                 <>
                   <Button onClick={handleUpdate}>Save</Button>
@@ -109,7 +109,7 @@ const Profile = () => {
         <CardContent>
           {editing ? (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label>First Name</Label>
                   <Input
@@ -170,9 +170,9 @@ const Profile = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center space-x-2">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <Mail className="h-4 w-4 text-muted-foreground shrink-0" />
                   <span className="text-sm">{member.user.email}</span>
                 </div>
                 {member.phone && (

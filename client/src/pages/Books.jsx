@@ -103,13 +103,13 @@ const Books = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Books</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Books</h1>
           <p className="text-gray-600 dark:text-gray-400">{isLibrarian ? 'Manage library catalog' : 'Browse and borrow books'}</p>
         </div>
         {isLibrarian && (
-          <Button onClick={() => setShowAddModal(true)}>
+          <Button onClick={() => setShowAddModal(true)} className="self-start sm:self-auto">
             <Plus className="h-4 w-4 mr-2" />
             Add Book
           </Button>
@@ -194,7 +194,7 @@ const Books = () => {
 
       {/* Add Book Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle>Add New Book</CardTitle>
@@ -215,7 +215,7 @@ const Books = () => {
 
       {/* Borrow Confirmation Modal */}
       {borrowConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle className="text-2xl">Confirm Borrow</CardTitle>
@@ -232,9 +232,9 @@ const Books = () => {
               {/* Borrower Info */}
               <div className="space-y-3">
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100">Borrower Information</h4>
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="flex items-center space-x-2">
-                    <MapPin className="h-4 w-4 text-gray-400" />
+                    <MapPin className="h-4 w-4 text-gray-400 shrink-0" />
                     <span className="text-gray-600 dark:text-gray-400">
                       {borrowConfirm.member.city ? `${borrowConfirm.member.city}, ${borrowConfirm.member.state}` : 'Location not set'}
                     </span>
@@ -251,7 +251,7 @@ const Books = () => {
               {/* Loan Details */}
               <div className="space-y-3">
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100">Loan Details</h4>
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 text-sm">
                   <div className="flex flex-col">
                     <span className="text-gray-500 dark:text-gray-400">Borrow Date:</span>
                     <span className="font-medium text-gray-900 dark:text-gray-100">{format(new Date(), 'MMM dd, yyyy')}</span>
