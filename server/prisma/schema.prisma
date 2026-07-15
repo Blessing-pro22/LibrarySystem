@@ -62,6 +62,7 @@ model Book {
   publishedYear Int?
   category    String?
   description String?
+  imageUrl    String?
   totalCopies Int     @default(0)
   availableCopies Int @default(0)
   createdAt   DateTime @default(now())

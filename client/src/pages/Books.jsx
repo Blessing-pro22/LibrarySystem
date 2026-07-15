@@ -136,8 +136,24 @@ const Books = () => {
           </div>
         ) : (
           books.map((book) => (
-            <Card key={book.id} className="hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
+            <Card key={book.id} className="hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+              <div className="relative h-48 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30">
+                {book.imageUrl ? (
+                  <img 
+                    src={book.imageUrl} 
+                    alt={book.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500" style={{ display: book.imageUrl ? 'none' : 'flex' }}>
+                  <BookOpen className="h-16 w-16 text-white opacity-50" />
+                </div>
+              </div>
+              <CardHeader className="pb-3">
                 <CardTitle className="text-lg text-gray-900 dark:text-gray-100 line-clamp-2">{book.title}</CardTitle>
                 <CardDescription className="text-gray-600 dark:text-gray-400">by {book.author}</CardDescription>
               </CardHeader>

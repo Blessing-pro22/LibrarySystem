@@ -126,60 +126,66 @@ const Dashboard = () => {
   if (!isLibrarian) {
     return (
       <div className="space-y-8">
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
-              Welcome, {user?.member?.firstName}!
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">Your library portal</p>
-          </div>
-          
-          {/* Notification Bell */}
-          <div className="relative">
-            <button 
-              onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              <Bell className="h-6 w-6 text-gray-600 dark:text-gray-400" />
-              {notifications.length > 0 && (
-                <span className="absolute top-0 right-0 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                  {notifications.length}
-                </span>
-              )}
-            </button>
-            
-            {/* Notification Dropdown */}
-            {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50">
-                <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Notifications</h3>
-                </div>
-                <div className="max-h-64 overflow-y-auto">
-                  {notifications.length === 0 ? (
-                    <p className="p-4 text-sm text-gray-500 dark:text-gray-400 text-center">No notifications</p>
-                  ) : (
-                    notifications.map(notification => (
-                      <div key={notification.id} className="p-4 border-b border-gray-100 dark:border-gray-700 last:border-0">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-900 dark:text-gray-100">{notification.message}</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                              Due: {format(new Date(notification.dueDate), 'MMM dd, yyyy')}
-                            </p>
-                          </div>
-                          <button 
-                            onClick={() => dismissNotification(notification.id)}
-                            className="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                    ))
+        {/* Hero Banner */}
+        <div className="relative h-64 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-500 rounded-2xl overflow-hidden shadow-xl">
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="relative h-full flex items-center justify-between px-8">
+            <div className="text-white max-w-lg">
+              <h1 className="text-4xl font-bold mb-2">Welcome, {user?.member?.firstName}!</h1>
+              <p className="text-lg opacity-90">Discover your next great read from our curated collection</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              {/* Notification Bell */}
+              <div className="relative">
+                <button 
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="relative p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+                >
+                  <Bell className="h-6 w-6 text-white" />
+                  {notifications.length > 0 && (
+                    <span className="absolute top-0 right-0 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                      {notifications.length}
+                    </span>
                   )}
-                </div>
+                </button>
+                
+                {/* Notification Dropdown */}
+                {showNotifications && (
+                  <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50">
+                    <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">Notifications</h3>
+                    </div>
+                    <div className="max-h-64 overflow-y-auto">
+                      {notifications.length === 0 ? (
+                        <p className="p-4 text-sm text-gray-500 dark:text-gray-400 text-center">No notifications</p>
+                      ) : (
+                        notifications.map(notification => (
+                          <div key={notification.id} className="p-4 border-b border-gray-100 dark:border-gray-700 last:border-0">
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <p className="text-sm text-gray-900 dark:text-gray-100">{notification.message}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                  Due: {format(new Date(notification.dueDate), 'MMM dd, yyyy')}
+                                </p>
+                              </div>
+                              <button 
+                                onClick={() => dismissNotification(notification.id)}
+                                className="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                              >
+                                <X className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+              <div className="hidden md:block">
+                <BookOpen className="h-32 w-32 text-white opacity-30" />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -207,6 +213,43 @@ const Dashboard = () => {
             gradient="from-green-500 to-green-600"
           />
         </div>
+
+        {/* Featured Books Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Featured Books</CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-400">Discover popular titles from our collection</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {[
+                { title: 'To Kill a Mockingbird', author: 'Harper Lee', image: 'https://res.cloudinary.com/demo/image/upload/v1719424800/book-covers/to-kill-a-mockingbird.jpg' },
+                { title: '1984', author: 'George Orwell', image: 'https://res.cloudinary.com/demo/image/upload/v1719424800/book-covers/1984.jpg' },
+                { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', image: 'https://res.cloudinary.com/demo/image/upload/v1719424800/book-covers/the-great-gatsby.jpg' },
+                { title: 'Harry Potter', author: 'J.K. Rowling', image: 'https://res.cloudinary.com/demo/image/upload/v1719424800/book-covers/harry-potter.jpg' }
+              ].map((book, index) => (
+                <div key={index} className="group cursor-pointer">
+                  <div className="relative h-40 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-lg overflow-hidden mb-3">
+                    <img 
+                      src={book.image} 
+                      alt={book.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500" style={{ display: 'none' }}>
+                      <BookOpen className="h-8 w-8 text-white opacity-50" />
+                    </div>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm line-clamp-1">{book.title}</h4>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{book.author}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* My Current Loans */}
         <Card>
@@ -331,12 +374,30 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Book Info */}
-                <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{readingBook.copy.book.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">by {readingBook.copy.book.author}</p>
-                  {readingBook.copy.book.description && (
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{readingBook.copy.book.description}</p>
-                  )}
+                <div className="flex gap-6">
+                  <div className="relative w-32 h-48 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-xl shadow-lg overflow-hidden flex-shrink-0">
+                    {readingBook.copy.book.imageUrl ? (
+                      <img 
+                        src={readingBook.copy.book.imageUrl} 
+                        alt={readingBook.copy.book.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500" style={{ display: readingBook.copy.book.imageUrl ? 'none' : 'flex' }}>
+                      <BookOpen className="h-12 w-12 text-white opacity-50" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{readingBook.copy.book.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">by {readingBook.copy.book.author}</p>
+                    {readingBook.copy.book.description && (
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{readingBook.copy.book.description}</p>
+                    )}
+                  </div>
                 </div>
 
                 {/* Reading Content */}

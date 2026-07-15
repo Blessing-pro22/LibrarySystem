@@ -89,8 +89,21 @@ const BookDetails = () => {
         <CardHeader className="pb-8">
           <div className="flex justify-between items-start">
             <div className="flex items-start space-x-6">
-              <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-4 rounded-2xl shadow-lg">
-                <BookOpen className="h-16 w-16 text-white" />
+              <div className="relative w-32 h-48 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-xl shadow-lg overflow-hidden flex-shrink-0">
+                {book.imageUrl ? (
+                  <img 
+                    src={book.imageUrl} 
+                    alt={book.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500" style={{ display: book.imageUrl ? 'none' : 'flex' }}>
+                  <BookOpen className="h-12 w-12 text-white opacity-50" />
+                </div>
               </div>
               <div className="flex-1">
                 {editing ? (
