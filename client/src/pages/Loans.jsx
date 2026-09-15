@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../co
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '../components/ui/table'
 import Input from '../components/ui/input'
 import Label from '../components/ui/label'
+import BookCover from '../components/BookCover'
 import { format } from 'date-fns'
 
 const Loans = () => {
@@ -108,20 +109,28 @@ const Loans = () => {
               key={loan.id}
               className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3"
             >
-              {/* Title + Status */}
-              <div className="flex items-start justify-between gap-2">
-                <p className="font-semibold text-gray-900 dark:text-gray-100 flex-1 leading-tight">
-                  {loan.copy.book.title}
-                </p>
-                <span className={`shrink-0 px-2 py-1 rounded-full text-xs font-semibold ${statusBadgeClass(loan.status)}`}>
-                  {loan.status}
-                </span>
+              {/* Cover + Title + Status */}
+              <div className="flex gap-3">
+                <BookCover
+                  coverUrl={loan.copy.book.coverUrl}
+                  title={loan.copy.book.title}
+                  className="w-10 rounded shrink-0 aspect-[2/3]"
+                  iconClassName="h-4 w-4"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 flex-1 leading-tight line-clamp-2">
+                      {loan.copy.book.title}
+                    </p>
+                    <span className={`shrink-0 px-2 py-1 rounded-full text-xs font-semibold ${statusBadgeClass(loan.status)}`}>
+                      {loan.status}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                    {loan.member.firstName} {loan.member.lastName}
+                  </p>
+                </div>
               </div>
-
-              {/* Member */}
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {loan.member.firstName} {loan.member.lastName}
-              </p>
 
               {/* Dates */}
               <div className="grid grid-cols-2 gap-2 text-sm">
@@ -200,7 +209,17 @@ const Loans = () => {
               ) : (
                 loans.map((loan) => (
                   <TableRow key={loan.id}>
-                    <TableCell className="font-medium">{loan.copy.book.title}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <BookCover
+                          coverUrl={loan.copy.book.coverUrl}
+                          title={loan.copy.book.title}
+                          className="w-8 rounded shrink-0 aspect-[2/3]"
+                          iconClassName="h-3 w-3"
+                        />
+                        <span className="font-medium">{loan.copy.book.title}</span>
+                      </div>
+                    </TableCell>
                     <TableCell>
                       {loan.member.firstName} {loan.member.lastName}
                     </TableCell>

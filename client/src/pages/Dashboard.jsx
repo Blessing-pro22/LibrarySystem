@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { BookOpen, Users, Clock, AlertCircle, MapPin, TrendingUp, Book, BookMarked, Bell, X } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card'
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '../components/ui/table'
+import BookCover from '../components/BookCover'
 import { format } from 'date-fns'
 
 const Dashboard = () => {
@@ -234,23 +235,34 @@ const Dashboard = () => {
                   const isDueSoon = daysRemaining <= 3 && daysRemaining >= 0
                   
                   return (
-                    <div key={loan.id} className="p-4 border rounded-xl hover:shadow-md transition-shadow bg-white dark:bg-gray-800">
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">{loan.copy.book.title}</h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">by {loan.copy.book.author}</p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <StatusBadge status={loan.status} />
-                          <button 
-                            onClick={() => startReading(loan)}
-                            className="p-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:shadow-lg transition-shadow"
-                            title="Read Book"
-                          >
-                            <BookMarked className="h-5 w-5" />
-                          </button>
+                    <div key={loan.id} className="border rounded-xl hover:shadow-md transition-shadow bg-white dark:bg-gray-800 overflow-hidden">
+                      <div className="flex gap-3 p-4">
+                        <BookCover
+                          coverUrl={loan.copy.book.coverUrl}
+                          title={loan.copy.book.title}
+                          className="w-14 rounded-lg shrink-0 aspect-[2/3]"
+                          iconClassName="h-6 w-6"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex justify-between items-start mb-1 gap-2">
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-base text-gray-900 dark:text-gray-100 leading-tight line-clamp-2">{loan.copy.book.title}</h3>
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">by {loan.copy.book.author}</p>
+                            </div>
+                            <div className="flex items-center space-x-2 shrink-0">
+                              <StatusBadge status={loan.status} />
+                              <button
+                                onClick={() => startReading(loan)}
+                                className="p-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:shadow-lg transition-shadow"
+                                title="Read Book"
+                              >
+                                <BookMarked className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                      <div className="px-4 pb-4">
                       
                       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4 text-sm">
                         <div className="flex flex-col">
@@ -303,6 +315,7 @@ const Dashboard = () => {
                           </p>
                         </div>
                       )}
+                      </div>{/* end px-4 pb-4 */}
                     </div>
                   )
                 })}

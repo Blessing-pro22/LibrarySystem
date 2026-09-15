@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import { useAuth } from '../contexts/AuthContext'
-import { ArrowLeft, Plus, Trash2, BookOpen } from 'lucide-react'
+import { ArrowLeft, Plus, Trash2, Upload, RefreshCw } from 'lucide-react'
 import Button from '../components/ui/button'
 import Input from '../components/ui/input'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card'
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '../components/ui/table'
 import Label from '../components/ui/label'
+import BookCover from '../components/BookCover'
 
 const BookDetails = () => {
   const { id } = useParams()
@@ -18,6 +19,8 @@ const BookDetails = () => {
   const [showAddCopyModal, setShowAddCopyModal] = useState(false)
   const [editing, setEditing] = useState(false)
   const [editForm, setEditForm] = useState({})
+  const [uploadingCover, setUploadingCover] = useState(false)
+  const [refreshingCover, setRefreshingCover] = useState(false)
 
   useEffect(() => {
     fetchBook()
@@ -69,6 +72,40 @@ const BookDetails = () => {
     }
   }
 
+  const handleCoverUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploadingCover(true)
+    try {
+      const formData = new FormData()
+      formData.append('cover', file)
+      const res = await axios.post(`/api/books/${id}/cover`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      setBook((prev) => ({ ...prev, coverUrl: res.data.coverUrl }))
+      setEditForm((prev) => ({ ...prev, coverUrl: res.data.coverUrl }))
+    } catch (error) {
+      alert(error.response?.data?.error?.message || 'Cover upload failed')
+    } finally {
+      setUploadingCover(false)
+      e.target.value = ''
+    }
+  }
+
+  const handleCoverRefresh = async () => {
+    setRefreshingCover(true)
+    try {
+      const res = await axios.post(`/api/books/${id}/cover/refresh`)
+      setBook((prev) => ({ ...prev, coverUrl: res.data.coverUrl }))
+      setEditForm((prev) => ({ ...prev, coverUrl: res.data.coverUrl }))
+      if (!res.data.coverUrl) alert('No cover found for this ISBN via Open Library or Google Books.')
+    } catch (error) {
+      alert('Failed to refresh cover')
+    } finally {
+      setRefreshingCover(false)
+    }
+  }
+
   if (loading) {
     return <div className="text-center py-8">Loading book details...</div>
   }
@@ -89,8 +126,36 @@ const BookDetails = () => {
         <CardHeader className="pb-8">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div className="flex items-start gap-4 sm:gap-6 flex-1 min-w-0">
-              <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-3 sm:p-4 rounded-2xl shadow-lg shrink-0">
-                <BookOpen className="h-10 w-10 sm:h-16 sm:w-16 text-white" />
+              <div className="shrink-0 flex flex-col items-center gap-2">
+                <BookCover
+                  coverUrl={book.coverUrl}
+                  title={book.title}
+                  className="w-20 sm:w-28 rounded-xl shadow-lg aspect-[2/3]"
+                  iconClassName="h-8 w-8 sm:h-10 sm:w-10"
+                />
+                {isLibrarian && (
+                  <div className="flex flex-col gap-1 w-full text-center">
+                    <label className="cursor-pointer text-xs text-purple-600 dark:text-purple-400 hover:underline flex items-center justify-center gap-1">
+                      <Upload className="h-3 w-3" />
+                      {uploadingCover ? 'Uploading…' : 'Upload'}
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        className="sr-only"
+                        onChange={handleCoverUpload}
+                        disabled={uploadingCover}
+                      />
+                    </label>
+                    <button
+                      className="text-xs text-gray-500 dark:text-gray-400 hover:underline flex items-center justify-center gap-1 disabled:opacity-50"
+                      onClick={handleCoverRefresh}
+                      disabled={refreshingCover}
+                    >
+                      <RefreshCw className="h-3 w-3" />
+                      {refreshingCover ? 'Fetching…' : 'Auto-fetch'}
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 {editing ? (

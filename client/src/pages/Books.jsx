@@ -7,6 +7,7 @@ import Button from '../components/ui/button'
 import Input from '../components/ui/input'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card'
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '../components/ui/table'
+import BookCover from '../components/BookCover'
 import { format } from 'date-fns'
 
 const Books = () => {
@@ -136,7 +137,13 @@ const Books = () => {
           </div>
         ) : (
           books.map((book) => (
-            <Card key={book.id} className="hover:shadow-lg transition-shadow duration-300">
+            <Card key={book.id} className="hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+              <BookCover
+                coverUrl={book.coverUrl}
+                title={book.title}
+                className="w-full h-48"
+                iconClassName="h-14 w-14"
+              />
               <CardHeader>
                 <CardTitle className="text-lg text-gray-900 dark:text-gray-100 line-clamp-2">{book.title}</CardTitle>
                 <CardDescription className="text-gray-600 dark:text-gray-400">by {book.author}</CardDescription>
